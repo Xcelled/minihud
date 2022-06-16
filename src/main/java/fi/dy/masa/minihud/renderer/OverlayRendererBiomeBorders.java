@@ -117,10 +117,8 @@ public class OverlayRendererBiomeBorders extends OverlayRendererBase
 
         this.renderQuads(quads, BUFFER_1, BUFFER_2, this.cameraPosition);
 
-        BUFFER_1.end();
-        BUFFER_2.end();
-        renderQuads.uploadData(BUFFER_1);
-        renderLines.uploadData(BUFFER_2);
+        renderQuads.uploadData(BUFFER_1.end());
+        renderLines.uploadData(BUFFER_2.end());
 
         // All the quads need to have the same relative camera offset, so
         // we use an internal position that is only updated when all the quads are cleared

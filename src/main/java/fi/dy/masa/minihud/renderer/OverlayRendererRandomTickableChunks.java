@@ -95,11 +95,8 @@ public class OverlayRendererRandomTickableChunks extends OverlayRendererBase
             this.renderChunkEdgesIfApplicable(cameraPos, pos, chunks, entity.getEntityWorld(), color);
         }
 
-        BUFFER_1.end();
-        BUFFER_2.end();
-
-        renderQuads.uploadData(BUFFER_1);
-        renderLines.uploadData(BUFFER_2);
+        renderQuads.uploadData(BUFFER_1.end());
+        renderLines.uploadData(BUFFER_2.end());
 
         needsUpdate = false;
     }

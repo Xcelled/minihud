@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.BufferBuilder.BuiltBuffer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 
@@ -28,7 +29,7 @@ public abstract class RenderObjectBase
         return shader;
     }
 
-    public abstract void uploadData(BufferBuilder buffer);
+    public abstract void uploadData(BuiltBuffer buffer);
 
     public abstract void draw(MatrixStack matrixStack, Matrix4f projMatrix);
 

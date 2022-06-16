@@ -104,11 +104,8 @@ public class OverlayRendererSpawnChunks extends OverlayRendererBase
         corners = this.getSpawnChunkCorners(spawn, 9, mc.world);
         RenderUtils.renderWallsWithLines(corners.getLeft(), corners.getRight(), cameraPos, 16, 16, true, colorEntity, BUFFER_1, BUFFER_2);
 
-        BUFFER_1.end();
-        BUFFER_2.end();
-
-        renderQuads.uploadData(BUFFER_1);
-        renderLines.uploadData(BUFFER_2);
+        renderQuads.uploadData(BUFFER_1.end());
+        renderLines.uploadData(BUFFER_2.end());
 
         needsUpdate = false;
     }

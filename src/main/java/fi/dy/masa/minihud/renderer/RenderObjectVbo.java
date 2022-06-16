@@ -7,6 +7,7 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormatElement;
+import net.minecraft.client.render.BufferBuilder.BuiltBuffer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 
@@ -39,9 +40,9 @@ public class RenderObjectVbo extends RenderObjectBase
     }
 
     @Override
-    public void uploadData(BufferBuilder buffer)
+    public void uploadData(BuiltBuffer buffer)
     {
-        this.vertexBuffer.upload(buffer.end());
+        this.vertexBuffer.upload(buffer);
     }
 
     @Override

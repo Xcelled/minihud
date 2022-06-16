@@ -71,11 +71,8 @@ public class OverlayRendererStructures extends OverlayRendererBase
             this.renderStructureBoxes(data, cameraPos);
         }
 
-        BUFFER_1.end();
-        BUFFER_2.end();
-
-        renderQuads.uploadData(BUFFER_1);
-        renderLines.uploadData(BUFFER_2);
+        renderQuads.uploadData(BUFFER_1.end());
+        renderLines.uploadData(BUFFER_2.end());
     }
 
     private void renderStructureBoxes(List<WrappedData> wrappedData, Vec3d cameraPos)
