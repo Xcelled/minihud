@@ -1,7 +1,6 @@
 package fi.dy.masa.minihud.renderer;
 
 import java.util.function.Supplier;
-import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.BufferBuilder.BuiltBuffer;

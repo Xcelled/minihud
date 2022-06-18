@@ -1,19 +1,21 @@
 package fi.dy.masa.minihud.renderer;
 
 import java.util.function.Supplier;
+
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferBuilder.BuiltBuffer;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormatElement;
-import net.minecraft.client.render.BufferBuilder.BuiltBuffer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 
 public class RenderObjectVbo extends RenderObjectBase
 {
-    protected final VertexBuffer vertexBuffer;
+    protected BuiltBuffer builtBuffer;
+
     protected final VertexFormat format;
     protected final boolean hasTexture;
 
@@ -21,7 +23,6 @@ public class RenderObjectVbo extends RenderObjectBase
     {
         super(glMode, shader);
 
-        this.vertexBuffer = new VertexBuffer();
         this.format = format;
 
         boolean hasTexture = false;
@@ -42,19 +43,30 @@ public class RenderObjectVbo extends RenderObjectBase
     @Override
     public void uploadData(BuiltBuffer buffer)
     {
-        this.vertexBuffer.upload(buffer);
+        if (builtBuffer != null) {
+            builtBuffer.release();
+        }
+        builtBuffer = buffer;
     }
 
     @Override
     public void draw(MatrixStack matrixStack, Matrix4f projMatrix)
     {
+        if (builtBuffer == null) {
+            return;
+        }
+
         if (this.hasTexture)
         {
             RenderSystem.enableTexture();
         }
 
         RenderSystem.setShader(this.getShader());
-        this.vertexBuffer.draw(matrixStack.peek().getPositionMatrix(), projMatrix, this.getShader().get());
+        NonReleasingVertexBuffer vertexBuffer = new NonReleasingVertexBuffer();
+        vertexBuffer.bind();
+        vertexBuffer.upload(builtBuffer);
+        vertexBuffer.draw(matrixStack.peek().getPositionMatrix(), projMatrix, this.getShader().get());
+        vertexBuffer.close();
 
         if (this.hasTexture)
         {
@@ -65,6 +77,6 @@ public class RenderObjectVbo extends RenderObjectBase
     @Override
     public void deleteGlResources()
     {
-        this.vertexBuffer.close();
+        this.builtBuffer.release();
     }
 }
