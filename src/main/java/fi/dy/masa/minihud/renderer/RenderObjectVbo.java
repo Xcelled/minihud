@@ -77,6 +77,8 @@ public class RenderObjectVbo extends RenderObjectBase
     @Override
     public void deleteGlResources()
     {
-        this.builtBuffer.release();
+        if (this.builtBuffer != null) {
+            this.builtBuffer.release();
+        }
     }
 }
